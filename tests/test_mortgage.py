@@ -12,7 +12,7 @@ from mortgage.pixell_lookup import MortgageRate, MortgageFrequency, VALID_AMORTI
 
 class MortgageTests(unittest.TestCase):
 
-    # mortgage tests
+    # __init__ tests
     
     def test_loan_amount_invalid_input(self):
         # Arrange
@@ -76,6 +76,81 @@ class MortgageTests(unittest.TestCase):
         # Assert
         expected = 5000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15
         self.assertEqual(expected, actual)
+
+    # loan_amount accessor/mutator tests
+
+    def test_loan_amount_mutator_negative_value(self):
+        # Arrange
+        mortgage_instance = Mortgage(50000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
+        negative_loan_amount = -50
+
+        # Act
+        with self.assertRaises(ValueError) as context:
+            mortgage_instance.loan_amount = negative_loan_amount
+
+        # Assert
+        self.assertEqual(str(context.exception), "Loan Amount must be positive.")
+
+    def test_loan_amount_mutator_zero_value(self):
+        # Arrange
+        mortgage_instance = Mortgage(50000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
+        zero_loan_amount = 0
+
+        # Act
+        with self.assertRaises(ValueError) as context:
+            mortgage_instance.loan_amount = zero_loan_amount
+
+        # Assert
+        self.assertEqual(str(context.exception), "Loan Amount must be positive.")
+
+    def test_loan_amount_mutator_positive_value(self):
+        # Arrange
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        target.loan_amount = 1000
+        actual = target._loan_amount
+
+        # Assert
+        expected = 1000
+        self.assertEqual(expected,actual)
+
+    # rate accessor/mutator tests
+
+    def test_rate_mutator_valid_input(self):  
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        target._rate = MortgageRate.FIXED_5
+        actual = target._rate
+
+        # Assert
+        expected = MortgageRate.FIXED_5
+        self.assertEqual(expected,actual)
+
+    def test_rate_mutator_invalid_input(self):
+        # Arrange
+        mortgage_instance = Mortgage(50000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
+        invalid_rate = "MortgageRate.FIXED_7"
+
+        # Act
+        with self.assertRaises(ValueError) as context:
+            mortgage_instance.rate = invalid_rate
+
+        # Assert
+        self.assertEqual(str(context.exception), "Rate provided is invalid.")
+    
+
 
         
 

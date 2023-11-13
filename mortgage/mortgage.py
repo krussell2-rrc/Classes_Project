@@ -96,7 +96,9 @@ class Mortgage:
             raise ValueError("Amortization provided is invalid.")
 
         self._amortization = amortization
+    
 
+    
         
         
 
