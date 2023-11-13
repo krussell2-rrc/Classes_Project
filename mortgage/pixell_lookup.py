@@ -2,8 +2,8 @@
 Description: Enumerations to keep track of valid mortgage rates 
 and payment frequencies. A list to keep track of valid amortization periods.
 Author: ACE Department
-Edited By: {Student Name}
-Date: {Date}
+Edited By: Kareem Russell
+Date: November 12, 2023
 Usage: The enumerations and list in this file may be used when working 
 with mortgages to ensure only valid rates, frequencies and amortization 
 periods are used.
@@ -14,18 +14,9 @@ from enum import Enum
 
 VALID_AMORTIZATION = [5, 10, 15, 20, 25, 30] 
 
-class MortgageRates(Enum):
+class MortgageRate(Enum):
     """
     An enumeration containing the different valid mortgage rates.
-
-    Values:
-    FIXED_5: 
-    FIXED_3:
-    FIXED_1:
-    VARIABLE_5
-    VARIABLE_3:
-    VARIABLE_1:
- 
     """
     FIXED_5 = 0.0500
     FIXED_3 = 0.0579
@@ -37,12 +28,6 @@ class MortgageRates(Enum):
 class MortgageFrequency(Enum):
     """
     An enumeration containing the different mortgage payment frequencies.
-
-    Values:
-    MONTHLY: Payment frequency of monthly payments.
-    BI_WEEKLY: Payment frequency of bi weekly payments.
-    WEEKLY: Payment frequency of weekly payments.
-       
     """
     MONTHLY = 12
     BI_WEEKLY = 26
