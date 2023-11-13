@@ -2,7 +2,7 @@
 Description: Enumerations to keep track of valid mortgage rates 
 and payment frequencies. A list to keep track of valid amortization periods.
 Author: ACE Department
-Edited By: Kareem Russell
+Edited By: Kareem Russel
 Date: November 12, 2023
 Usage: The enumerations and list in this file may be used when working 
 with mortgages to ensure only valid rates, frequencies and amortization 
