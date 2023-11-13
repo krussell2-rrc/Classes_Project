@@ -149,6 +149,8 @@ class MortgageTests(unittest.TestCase):
 
         # Assert
         self.assertEqual(str(context.exception), "Rate provided is invalid.")
+
+        # freq
     
 
 
