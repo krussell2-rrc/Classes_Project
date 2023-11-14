@@ -96,6 +96,25 @@ class Mortgage:
             raise ValueError("Amortization provided is invalid.")
 
         self._amortization = amortization
+
+    def calculate_payment(self) -> float:
+        if self.loan_amount <= 0:
+            raise ValueError("Loan Amount must be positive.")
+        
+        monthly_interest_rate = self.rate.value / 12 
+        number_of_payments = self.amortization * self.frequency.value
+
+        calculated_payment = (self.loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** number_of_payments / (((1 + monthly_interest_rate) ** number_of_payments) - 1))
+
+        calculated_payment = round(calculated_payment, 2)
+        return calculated_payment
+    
+
+        
+
+
+        
+
     
 
     

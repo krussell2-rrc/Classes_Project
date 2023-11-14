@@ -229,6 +229,91 @@ class MortgageTests(unittest.TestCase):
         # Assert
         self.assertEqual(str(context.exception), "Amortization provided is invalid.")
 
+    # calculate_payment tests
+
+    def test_calculate_payment_valid(self):
+        # Arrange
+        loan_amount = 682912.45
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+        
+        # Act
+        calculated_payment = target.calculate_payment()
+
+        # Assert
+        self.assertAlmostEqual(calculated_payment, 4046.23, places=2)
+
+    def test_calculate_payment_new_loan_amount(self):
+        # Arrange
+        loan_amount = 2000.12
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+        
+        # Act
+        calculated_payment = target.calculate_payment()
+
+        # Assert
+        self.assertAlmostEqual(calculated_payment, 11.85, places=2)
+
+    def test_calculate_payment_new_rate(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        calculated_payment = target.calculate_payment()
+
+        # Assert
+        self.assertAlmostEqual(calculated_payment, 3666.02, places=2)
+
+    def test_calculate_payment_new_frequency(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.BI_WEEKLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        calculated_payment = target.calculate_payment()
+
+        # Assert
+        self.assertAlmostEqual(calculated_payment, 3427.18, places=2)
+
+    def test_calculate_payment_new_amortization(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 5
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        calculated_payment = target.calculate_payment()
+
+        # Assert
+        self.assertAlmostEqual(calculated_payment, 13167.71, places=2)
+
+    
+
+
+
+
+
+    
+
 
 
         
