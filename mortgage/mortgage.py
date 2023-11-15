@@ -19,9 +19,13 @@ class Mortgage:
             loan_amount (float): The amount of mortgage loan.
             rate (MortgageRate): The annual interest rate.
             frequency (MortgageFrequency): The number of payments per year.
-            amortization (int): The number of years in which the loan must be repaid.
+            amortization (int): The period of years in which the loan must be repaid.
 
         Raises:
+            ValueError: Raised if the loan_amount is zero or negative.
+            ValueError: Raised if the incoming rate value is not an instance of the MortgageRate enum.
+            ValueError: Raised if the incoming frequency value is not an instance of the MortgageFrequency enum.
+            ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.        
         """
         self._loan_amount = loan_amount
         self._rate = rate
@@ -32,9 +36,6 @@ class Mortgage:
     def loan_amount(self) -> float:
         """
         float: Gets the amount of the mortgage loan.
-
-        Raises: 
-            ValueError: Raised if the incoming loan amount value is zero or negative.
         """
         return self._loan_amount
     
@@ -42,29 +43,20 @@ class Mortgage:
     def rate(self) -> MortgageRate:
         """
         MortgageRate: Gets the annual interest rate.
-
-        Raises: 
-            ValueError: Raised if the incoming rate value is not an instance of the MortgageRate enum.
         """
         return self._rate
 
     @property
     def frequency(self) -> MortgageFrequency:
         """   
-        MortgageFrequency: Gets the number of payments per year.
-
-        Raises:
-            ValueError: Raised if the incoming frequency value is not an instance of the MortgageFrequency enum.    
+        MortgageFrequency: Gets the number of payments per year. 
         """
         return self._frequency
     
     @property
     def amortization(self) -> int:
         """
-        amortization (int): Gets the number of years in which the loan must be paid.
-
-        Raises:
-            ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.               
+        amortization (int): Gets the number of years in which the loan must be paid.         
         """
         return self._amortization
     
@@ -122,7 +114,7 @@ class Mortgage:
         Sets number of years in which the loan must be paid.
 
         Args: 
-            amortization (int): The number of years in which the loan must be repaid.
+            amortization (int): The period of years in which the loan must be repaid.
 
         Raises:
             ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.               
@@ -141,15 +133,19 @@ class Mortgage:
             float: The mortgage payment amount.
 
         Raises:
-            ValueError: Raised if the incoming loan amount value is zero or negative.        
+            ValueError: Raised if the incoming loan amount value is zero or negative.   
+            ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.
         """        
         if self.loan_amount <= 0:
             raise ValueError("Loan Amount must be positive.")
         
-        monthly_interest_rate = self.rate.value / 12 
+        if self.amortization not in VALID_AMORTIZATION:
+            raise ValueError("Amortization provided is invalid.")
+        
+        interest_rate = self.rate.value / self.frequency.value 
         number_of_payments = self.amortization * self.frequency.value
 
-        calculated_payment = (self.loan_amount * monthly_interest_rate * (1 + monthly_interest_rate) ** number_of_payments / (((1 + monthly_interest_rate) ** number_of_payments) - 1))
+        calculated_payment = (self.loan_amount * interest_rate * (1 + interest_rate) ** number_of_payments / (((1 + interest_rate) ** number_of_payments) - 1))
 
         calculated_payment = round(calculated_payment, 2)
         return calculated_payment
