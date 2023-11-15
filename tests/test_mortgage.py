@@ -306,7 +306,58 @@ class MortgageTests(unittest.TestCase):
         # Assert
         self.assertAlmostEqual(calculated_payment, 13167.71, places=2)
 
-    
+    # __str__ tests
+
+    def test_str_monthly_payment(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        result = str(target)
+
+        # Assert
+        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        self.assertEqual(expected, result)
+
+    def test_str_biweekly_payment(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.BI_WEEKLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        result = str(target)
+
+        # Assert
+        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        self.assertEqual(expected, result)
+
+    def test_str_weekly_payment(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.WEEKLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        result = str(target)
+
+        # Assert
+        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        self.assertEqual(expected, result)
+
+
+
 
 
 

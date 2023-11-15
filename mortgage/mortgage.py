@@ -32,7 +32,7 @@ class Mortgage:
     @property
     def loan_amount(self) -> float:
         """
-        float: Gets and sets the amount of the mortgage loan.
+        float: Gets the amount of the mortgage loan.
 
         Raises: 
             ValueError: Raised if the incoming loan amount value is zero or negative.
@@ -42,7 +42,7 @@ class Mortgage:
     @property
     def rate(self) -> MortgageRate:
         """
-        MortgageRate: Gets and sets the annual interest rate.
+        MortgageRate: Gets the annual interest rate.
 
         Raises: 
             ValueError: Raised if the incoming rate value is not an instance of the MortgageRate enum.
@@ -52,7 +52,7 @@ class Mortgage:
     @property
     def frequency(self) -> MortgageFrequency:
         """   
-        MortgageFrequency: Gets and sets the number of payments per year.
+        MortgageFrequency: Gets the number of payments per year.
 
         Raises:
             ValueError: Raised if the incoming frequency value is not an instance of the MortgageFrequency enum.    
@@ -62,7 +62,7 @@ class Mortgage:
     @property
     def amortization(self) -> int:
         """
-        amortization (int): Gets and sets number of years.
+        amortization (int): Gets the number of years in which the loan must be paid.
 
         Raises:
             ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.               
@@ -70,7 +70,16 @@ class Mortgage:
         return self._amortization
     
     @loan_amount.setter
-    def loan_amount(self, loan_amount: float) -> None:    
+    def loan_amount(self, loan_amount: float) -> None:
+        """
+        Sets the amount of the mortgage loan.
+
+        Args:
+            loan_amount (float): The amount of the mortgage loan.
+
+        Raises: 
+            ValueError: Raised if the incoming loan amount value is zero or negative.
+        """    
         if loan_amount <= 0:
             raise ValueError("Loan Amount must be positive.")
         
@@ -78,6 +87,15 @@ class Mortgage:
            
     @rate.setter
     def rate(self, rate: MortgageRate) -> None:
+        """
+        Sets the annual interest rate.
+
+        Args:
+            rate (MortgageRate): The annual interest rate.
+
+        Raises: 
+            ValueError: Raised if the incoming rate value is not an instance of the MortgageRate enum.
+        """
         if not isinstance(rate, MortgageRate):
             raise ValueError("Rate provided is invalid.")
             
@@ -85,6 +103,15 @@ class Mortgage:
         
     @frequency.setter
     def frequency(self, frequency: MortgageFrequency) -> None:
+        """   
+        Sets the number of payments per year.
+
+        Args: 
+            frequency (MortgageFrequency): The number of payments per year.
+
+        Raises:
+            ValueError: Raised if the incoming frequency value is not an instance of the MortgageFrequency enum.    
+        """
         if not isinstance (frequency, MortgageFrequency):
             raise ValueError("Frequency provided is invalid.")
         
@@ -92,6 +119,15 @@ class Mortgage:
         
     @amortization.setter
     def amortization(self, amortization: int) -> None:
+        """
+        Sets number of years in which the loan must be paid.
+
+        Args: 
+            amortization (int): The number of years in which the loan must be repaid
+
+        Raises:
+            ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.               
+        """
         if not amortization in VALID_AMORTIZATION:
             raise ValueError("Amortization provided is invalid.")
 
@@ -108,6 +144,13 @@ class Mortgage:
 
         calculated_payment = round(calculated_payment, 2)
         return calculated_payment
+    
+    def __str__(self):
+        """String representation of Mortgage object.
+        """
+        return f"Mortgage Amount: ${self._loan_amount:,.2f}\nRate: {self._rate.value * 100}%\nAmortization: {self._amortization}\nFrequency: {self._frequency.value} -- Calculated Payment: ${self.calculate_payment():,.2f}"
+
+
     
 
         
