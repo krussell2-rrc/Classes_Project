@@ -19,10 +19,9 @@ class Mortgage:
             loan_amount (float): The amount of mortgage loan.
             rate (MortgageRate): The annual interest rate.
             frequency (MortgageFrequency): The number of payments per year.
-            amortization (int): The number of years to repay the mortgage loan.
+            amortization (int): The number of years in which the loan must be repaid.
 
         Raises:
-
         """
         self._loan_amount = loan_amount
         self._rate = rate
@@ -123,7 +122,7 @@ class Mortgage:
         Sets number of years in which the loan must be paid.
 
         Args: 
-            amortization (int): The number of years in which the loan must be repaid
+            amortization (int): The number of years in which the loan must be repaid.
 
         Raises:
             ValueError: Raised if the incoming amortization value is not found in the VALID_AMORTIZATION list.               
@@ -134,6 +133,16 @@ class Mortgage:
         self._amortization = amortization
 
     def calculate_payment(self) -> float:
+        """
+        Calculates and returns the mortgage payment amount based on the loan amount, 
+        annual interest rate, payment frequency and amortization.
+
+        Returns:
+            float: The mortgage payment amount.
+
+        Raises:
+            ValueError: Raised if the incoming loan amount value is zero or negative.        
+        """        
         if self.loan_amount <= 0:
             raise ValueError("Loan Amount must be positive.")
         
@@ -148,8 +157,12 @@ class Mortgage:
     def __str__(self):
         """String representation of Mortgage object.
         """
-        return f"Mortgage Amount: ${self._loan_amount:,.2f}\nRate: {self._rate.value * 100}%\nAmortization: {self._amortization}\nFrequency: {self._frequency.value} -- Calculated Payment: ${self.calculate_payment():,.2f}"
+        return f"Mortgage Amount: ${self._loan_amount:,.2f}\nRate: {self._rate.value * 100}%\nAmortization: {self._amortization}\nFrequency: {self._frequency.name.capitalize()} -- Calculated Payment: ${self.calculate_payment():,.2f}"
 
+    def __repr__(self):
+        """Representation of Mortgage object.
+        """
+        return f"[{self.loan_amount}, {self._rate.value}, {self._amortization}, {self._frequency.value}]"
 
     
 

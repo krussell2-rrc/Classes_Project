@@ -16,48 +16,63 @@ class MortgageTests(unittest.TestCase):
     
     def test_loan_amount_invalid_input(self):
         # Arrange
-        mortgage_instance = Mortgage(50000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
-        invalid_loan_amount = -50.0
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
 
         # Act
         with self.assertRaises(ValueError) as context:
-            mortgage_instance.loan_amount = invalid_loan_amount
+            target.loan_amount = 0
 
         # Assert
         self.assertEqual(str(context.exception), "Loan Amount must be positive.")
 
     def test_rate_invalid_input(self):
         # Arrange
-        mortgage_instance = Mortgage(100000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
-        invalid_rate = "FIXED_2"
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
 
         # Act
         with self.assertRaises(ValueError) as context:
-            mortgage_instance.rate = invalid_rate
-
+            target.rate = "MortgageRate.FIXED_2"
         # Assert
         self.assertEqual(str(context.exception), "Rate provided is invalid.")
 
     def test_frequency_invalid_input(self):
         # Arrange
-        mortgage_instance = Mortgage(100000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
-        invalid_frequency = "DAILY"
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
 
         # Act
         with self.assertRaises(ValueError) as context:
-            mortgage_instance.frequency = invalid_frequency
+            target.frequency = "MortgageFrequency.DAILY"
 
         # Assert
         self.assertEqual(str(context.exception), "Frequency provided is invalid.")
 
     def test_amortization_invalid_input(self):
         # Arrange
-        mortgage_instance = Mortgage(100000, MortgageRate.FIXED_5, MortgageFrequency.MONTHLY, 15)
-        invalid_amortization = 12
+        loan_amount = 5000
+        rate = MortgageRate.FIXED_5
+        frequency = MortgageFrequency.MONTHLY
+        amortization = 15
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
 
         # Act
         with self.assertRaises(ValueError) as context:
-            mortgage_instance.amortization = invalid_amortization
+            target.amortization = 12
 
         # Assert
         self.assertEqual(str(context.exception), "Amortization provided is invalid.")
@@ -309,7 +324,7 @@ class MortgageTests(unittest.TestCase):
     # __str__ tests
 
     def test_str_monthly_payment(self):
-        # Arrange
+        # Arranges
         loan_amount = 682912.45  
         rate = MortgageRate.FIXED_1
         frequency = MortgageFrequency.MONTHLY
@@ -321,7 +336,7 @@ class MortgageTests(unittest.TestCase):
         result = str(target)
 
         # Assert
-        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Monthly -- Calculated Payment: $4,046.23"
         self.assertEqual(expected, result)
 
     def test_str_biweekly_payment(self):
@@ -337,7 +352,7 @@ class MortgageTests(unittest.TestCase):
         result = str(target)
 
         # Assert
-        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Bi_weekly -- Calculated Payment: $3,427.18"
         self.assertEqual(expected, result)
 
     def test_str_weekly_payment(self):
@@ -353,8 +368,28 @@ class MortgageTests(unittest.TestCase):
         result = str(target)
 
         # Assert
-        expected = f"Mortgage Amount: ${loan_amount:,.2f}\nRate: {rate.value * 100}%\nAmortization: {amortization}\nFrequency: {frequency.value} -- Calculated Payment: ${target.calculate_payment():,.2f}"
+        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Weekly -- Calculated Payment: $3,353.58"
         self.assertEqual(expected, result)
+
+    # repr test
+
+    def test_repr_valid(self):
+        # Arrange
+        loan_amount = 682912.45  
+        rate = MortgageRate.FIXED_1
+        frequency = MortgageFrequency.WEEKLY
+        amortization = 30
+
+        target = Mortgage(loan_amount, rate, frequency, amortization)
+
+        # Act
+        result = repr(target)
+
+        # Assert
+        expected = "[682912.45, 0.0589, 30, 52]"
+        self.assertEqual(expected,result)
+
+
 
 
 
