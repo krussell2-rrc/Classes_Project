@@ -304,7 +304,7 @@ class MortgageTests(unittest.TestCase):
         calculated_payment = target.calculate_payment()
 
         # Assert
-        self.assertAlmostEqual(calculated_payment, 3427.18, places=2)
+        self.assertAlmostEqual(calculated_payment, 1866.60, places=2)
 
     def test_calculate_payment_new_amortization(self):
         # Arrange
@@ -352,7 +352,7 @@ class MortgageTests(unittest.TestCase):
         result = str(target)
 
         # Assert
-        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Bi_weekly -- Calculated Payment: $3,427.18"
+        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Bi_weekly -- Calculated Payment: $1,866.60"
         self.assertEqual(expected, result)
 
     def test_str_weekly_payment(self):
@@ -368,7 +368,7 @@ class MortgageTests(unittest.TestCase):
         result = str(target)
 
         # Assert
-        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Weekly -- Calculated Payment: $3,353.58"
+        expected = "Mortgage Amount: $682,912.45\nRate: 5.89%\nAmortization: 30\nFrequency: Weekly -- Calculated Payment: $933.11"
         self.assertEqual(expected, result)
 
     # repr test
